@@ -2,12 +2,12 @@ class Worker:
     id_count = 0
 
     def __init__(self, name, surname, department, salary):
-        self.__id = Worker.id_count
-        Worker.id_count += 1
         self.name = name
         self.surname = surname
         self.department = department
         self.salary = round(float(salary), 2)
+        self.__id = Worker.id_count
+        Worker.id_count += 1
 
     def get_id(self):
         return self.__id
