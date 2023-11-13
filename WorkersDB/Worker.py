@@ -31,8 +31,8 @@ class Worker:
         return output
 
     def __getitem__(self, item):
-        if item == 'id' or item == '_Worker__id':
-            raise ValueError("id is a private field")
+        if item == 'id':
+            return self.get_id()
 
         if item not in vars(self):
             raise ValueError(f"{item} is not a field of class instance")
