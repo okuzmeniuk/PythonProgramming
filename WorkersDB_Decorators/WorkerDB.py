@@ -4,7 +4,7 @@ from Worker import Worker
 
 def dec_sort(method):
     def wrapper(self, key, descending):
-        self.database.sort(key=lambda worker: worker[key], reverse=descending)
+        print(f"Sorted by {key}:")
         return method(self, key, descending)
 
     return wrapper
@@ -12,11 +12,7 @@ def dec_sort(method):
 
 def dec_search(method):
     def wrapper(self, key, keyword):
-        self.search_results = WorkerDB()
-
-        for worker in self.database:
-            if keyword in str(worker[key]):
-                self.search_results.add(worker)
+        print(f"Searched in {key} with {keyword}:")
 
         return method(self, key, keyword)
 
@@ -70,10 +66,14 @@ class WorkerDB:
 
     @dec_sort
     def sort(self, key, descending=False):
-        pass
+        self.database.sort(key=lambda worker: worker[key], reverse=descending)
 
     @dec_search
     def search(self, key, keyword):
-        result = self.search_results
-        del self.search_results
-        return result
+        results = WorkerDB()
+
+        for worker in self.database:
+            if keyword in str(worker[key]):
+                results.add(worker)
+
+        return results
