@@ -47,12 +47,10 @@ def sort(worker_db):
         return
 
     key = input("Enter key to sort by (id, name, surname, department, salary): ")
-    descending = input("Enter 'a' to sort in ascending or 'd' in descending: ")
-    descending = (descending == 'd')
     try:
-        worker_db.sort(key, descending)
-    except Exception as exc:
-        print(exc)
+        worker_db.sort(key)
+    except Exception:
+        pass
 
 
 def delete_element(worker_db):

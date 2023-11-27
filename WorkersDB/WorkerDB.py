@@ -3,16 +3,21 @@ from Worker import Worker
 
 
 def dec_sort(method):
-    def wrapper(self, key, descending):
-        print(f"Sorted by {key}:")
-        return method(self, key, descending)
+    def wrapper(self, key):
+        print(f"Trying to sort by {key}.")
+        try:
+            method(self, key)
+            print("Success.")
+        except ValueError as err:
+            print("There was a problem: ", err)
+            raise err
 
     return wrapper
 
 
 def dec_search(method):
     def wrapper(self, key, keyword):
-        print(f"Searched in {key} with {keyword}:")
+        print(f"Searched in {key} with {keyword}.")
 
         return method(self, key, keyword)
 
@@ -65,8 +70,8 @@ class WorkerDB:
         self[id_to_edit][key] = new_value
 
     @dec_sort
-    def sort(self, key, descending=False):
-        self.database.sort(key=lambda worker: worker[key], reverse=descending)
+    def sort(self, key):
+        self.database.sort(key=lambda worker: worker[key])
 
     @dec_search
     def search(self, key, keyword):

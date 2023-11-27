@@ -13,11 +13,19 @@ class Worker:
         self.name = name
         self.surname = surname
         self.department = department
-        self.salary = round(float(salary), 2)
+        self.salary = salary
         self.__id = next(Worker.id_gen)
 
     def get_id(self):
         return self.__id
+
+    @property
+    def salary(self):
+        return self._salary
+
+    @salary.setter
+    def salary(self, value):
+        self._salary = round(float(value), 2)
 
     def __repr__(self):
         output = ""
@@ -25,7 +33,7 @@ class Worker:
         output += f"{self.name},"
         output += f"{self.surname},"
         output += f"{self.department},"
-        output += f"{self.salary}"
+        output += f"{self.salary:.2f}"
         return output
 
     def __str__(self):
@@ -34,12 +42,15 @@ class Worker:
         output += f"Name: {self.name}\n"
         output += f"Surname: {self.surname}\n"
         output += f"Department: {self.department}\n"
-        output += f"Salary: {self.salary}"
+        output += f"Salary: {self.salary:.2f}"
         return output
 
     def __getitem__(self, item):
         if item == 'id':
             return self.get_id()
+
+        if item == "salary":
+            return self.salary
 
         if item not in vars(self):
             raise ValueError(f"{item} is not a field of class instance")
@@ -50,11 +61,12 @@ class Worker:
         if key == 'id' or key == '_Worker__id':
             raise ValueError("id is a private field")
 
+        if key == "salary":
+            self.salary = round(float(value), 2)
+            return
+
         if key not in vars(self):
             raise ValueError(f"{key} is not a field of class instance")
-
-        if key == "salary":
-            value = round(float(value), 2)
 
         vars(self)[key] = value
 
