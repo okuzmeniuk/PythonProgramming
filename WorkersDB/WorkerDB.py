@@ -1,5 +1,6 @@
 import csv
 from Worker import Worker
+import matplotlib.pyplot as plt
 
 
 def dec_sort(method):
@@ -82,3 +83,17 @@ class WorkerDB:
                 results.add(worker)
 
         return results
+
+    def department_pie_plot(self):
+        departments = {}
+
+        for worker in self.database:
+            current_department = worker.department
+
+            if current_department not in departments:
+                departments[current_department] = 1
+            else:
+                departments[current_department] += 1
+
+        plt.pie(list(departments.values()), labels=list(departments.keys()))
+        plt.savefig('departments.png')

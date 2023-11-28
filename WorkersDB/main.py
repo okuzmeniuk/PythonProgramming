@@ -71,6 +71,10 @@ def edit_element(worker_db):
         print(exc)
 
 
+def plot_departments_diagram(worker_db):
+    worker_db.department_pie_plot()
+
+
 def main():
     worker_db = WorkerDB('workers_to_read.csv')
 
@@ -81,7 +85,8 @@ def main():
         '4': "use the search",
         '5': "use the sort",
         '6': "delete the element by ID",
-        '7': "change element by ID"
+        '7': "change element by ID",
+        '8': "plot a departments diagram"
     }
 
     menu_functions = {
@@ -91,7 +96,8 @@ def main():
         '4': search,
         '5': sort,
         '6': delete_element,
-        '7': edit_element
+        '7': edit_element,
+        '8': plot_departments_diagram
     }
 
     Menu(menu_options, menu_functions).run(worker_db)
