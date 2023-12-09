@@ -31,6 +31,8 @@ class WorkerDB:
         self.filepath = filepath
 
     def __getitem__(self, item):
+        item = int(item)
+
         for worker in self.database:
             if worker.get_id() == item:
                 return worker
@@ -39,7 +41,7 @@ class WorkerDB:
         output = ""
 
         if len(self) == 0:
-            return "no records"
+            return "No records."
 
         for worker in self.database:
             output += str(worker) + '\n\n'
@@ -95,5 +97,6 @@ class WorkerDB:
             else:
                 departments[current_department] += 1
 
-        plt.pie(list(departments.values()), labels=list(departments.keys()))
-        plt.savefig('departments.png')
+        labels = [f"{department}: {amount}" for department, amount in departments.items()]
+        plt.pie(list(departments.values()), labels=labels)
+        plt.show()
